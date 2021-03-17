@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+ <configuration>
+ 
+ 	<!-- Alias 설정 -->
+ 	<typeAliases>
+ 		<!-- 각자 VO에 맞게 별칭 설정 -->
+ 		<typeAlias alias="userShowRoom" type="kr.co.nimo.ShowRoomVO"/>
+ 		<typeAlias alias="userFurniture" type="kr.co.nimo.FurnVO" />
+ 	</typeAliases>
+ 	
+ 	<!-- SQL Mapper 설정 -->
+ 	<mappers>
+ 		<!-- 각자 Mapper파일에 맞게 경로 및 파일명 설정 -->
+ 		<mapper resource="mappings/showRoom.xml" />
+ 	</mappers>
+ 
+ </configuration>
+ 

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="showroom">
+
+	<select id="userLivingShowRoomList" resultType="userShowRoom">
+		select show_name,
+		show_img, show_detail from showroom where show_category='거실'
+	</select>
+	<select id="userBedRoomList" resultType="userShowRoom">
+		select show_name,
+		show_img, show_furs_code, show_detail from showroom where
+		show_category='침실'
+	</select>
+	<select id="userLibraryList" resultType="userShowRoom">
+		select show_name,
+		show_img, show_furs_code, show_detail from showroom where
+		show_category='서재'
+	</select>
+	
+	<select id="userKitchenList" resultType="userShowRoom">
+		select show_name,
+		show_img, show_furs_code, show_detail from showroom where
+		show_category='주방'
+	</select>
+	<select id="userBathRoomList" resultType="userShowRoom">
+		select show_name,
+		show_img, show_furs_code, show_detail from showroom where
+		show_category='욕실'
+	</select>
+	<select id="userOneRoomList" resultType="userShowRoom">
+		select show_name,
+		show_img, show_furs_code, show_detail from showroom where
+		show_category='원룸'
+	</select>
+
+	<select id="userShowRoomDetail_ShowRoom"
+		resultType="userShowRoom">
+		select show_img, show_name, show_detail, show_furs_code,
+		show_category from showroom where show_name=#{show_name}
+	</select>
+	<select id="userShowRoomDetail_Furs0" resultType="userFurniture">
+		select
+		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		furniture where fur_code in (#{code0})
+	</select>
+	<select id="userShowRoomDetail_Furs1" resultType="userFurniture">
+		select
+		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		furniture where fur_code in (#{code0}, #{code1})
+	</select>
+	<select id="userShowRoomDetail_Furs2" resultType="userFurniture">
+		select
+		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		furniture where fur_code in (#{code0}, #{code1}, #{code2})
+	</select>
+	<select id="userShowRoomDetail_Furs3" resultType="userFurniture">
+		select
+		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3})
+	</select>
+	<select id="userShowRoomDetail_Furs4" resultType="userFurniture">
+		select
+		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3},
+		#{code4})
+	</select>
+	<select id="userShowRoomDetail_Furs5" resultType="userFurniture">
+		select
+		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3},
+		#{code4}, #{code5})
+	</select>
+	<select id="userShowRoomDetail_Furs6" resultType="userFurniture">
+		select
+		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3},
+		#{code4}, #{code5}, #{code6})
+	</select>
+	<select id="userShowRoomDetail_Furs7" resultType="userFurniture">
+		select
+		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3},
+		#{code4}, #{code5}, #{code6}, #{code7})
+	</select>
+	<select id="userShowRoomDetail_Furs8" resultType="userFurniture">
+		select
+		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3},
+		#{code4}, #{code5}, #{code6}, #{code7}, #{code8})
+	</select>
+	<select id="userShowRoomDetail_Furs9" resultType="userFurniture">
+		select
+		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3},
+		#{code4}, #{code5}, #{code6}, #{code7}, #{cod{e8}, #{code9})
+	</select>
+	
+	<select id="adminFurnInfo" resultType="userFurniture">
+		select 
+		fur_name, fur_price, fur_quantity, fur_detail from furniture where fur_image = #{fur_image}
+	</select>
+	
+	<update id="adminShowRoomUpdate">
+		update
+		showroom set 
+		show_name=#{show_name}, show_category=#{show_category}, show_detail=#{show_detail}
+		where show_name=#{show_name}
+	</update>
+	<update id="adminFurnUpdate">
+		update
+		furniture set
+		fur_name=#{furn_name}, fur_price=#{furn_price}, fur_detail=#{furn_detail}, fur_quantity=#{furn_quantity}
+		where fur_code=#{furn_code}
+	</update>
+	<delete id="adminShowRoomDelete">
+		delete from showroom where show_name=#{show_name}
+	</delete>
+	
+	<select id="ShowRoomBest" resultType="userShowRoom">
+		select show_name, show_category, show_detail, show_img from showroom where show_name in('거실에서 시간을 보낼 공', '따뜻한 원목과 클래식한 소품', '스마트하고 세련된 공간')
+	</select>
+	<select id="ShowRoomRecommend" resultType="userShowRoom">
+		select show_name, show_category, show_detail, show_img from showroom where show_name in('차분한 거실 오아시스', '스마트하고 세련된 공간', '따뜻한 원목과 클래식한 소품')
+	</select>
+	<select id="ShowRoomGaseongbi" resultType="userShowRoom">
+		select show_name, show_category, show_detail, show_img from showroom where show_name in('차분한 거실 오아시스', '거실에서 시간을 보낼 공', '따뜻한 원목과 클래식한 소품')
+	</select>
+
+</mapper>
