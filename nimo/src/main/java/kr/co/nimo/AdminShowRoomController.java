@@ -25,9 +25,9 @@ public class AdminShowRoomController {
 		return "showRoomInsert";
 	}
 	
-	@RequestMapping("admin/showRoomInsert.ni")
+	@RequestMapping("/adShowRoom/showRoomInsert.ni")
 	public String showRoomInsert() {
-		return "showRoomInsert";
+		return "adShowRoomInsert";
 	}
 	
 	@RequestMapping("/adShowRoom/livingShowRoomList.ni")
@@ -47,22 +47,50 @@ public class AdminShowRoomController {
 		return "adShowRoomDetail";
 	}
 	
-	@RequestMapping("/adShowRoom/adShowRoomUpdate.ni")
-	public String showRoomUpdate(ShowRoomVO showVO, FurnVO furnVO, Model model, HttpServletRequest request) {
+	@RequestMapping("/adShowRoom/adFurnUpdate.ni")
+	public String furnUpdate(ShowRoomVO showVO, FurnVO furnVO, Model model, HttpServletRequest request) {
 
+		System.out.println(request.getParameter("show_name"));
+		System.out.println(request.getParameter("furn_name"));
+		System.out.println(Integer.parseInt(request.getParameter("furn_price")));
+		System.out.println(request.getParameter("furn_detail"));
+		System.out.println(request.getParameter("furn_img"));
+		System.out.println(Integer.parseInt(request.getParameter("furn_quantity")));
+		
+		
 		showVO.setShow_name(request.getParameter("show_name"));
-		showVO.setShow_category(request.getParameter("show_category"));
-		showVO.setShow_detail(request.getParameter("show_detail"));
 		furnVO.setFur_name(request.getParameter("furn_name"));
+		furnVO.setFur_image(request.getParameter("furn_img"));
 		furnVO.setFur_price(Integer.parseInt(request.getParameter("furn_price")));
 		furnVO.setFur_detail(request.getParameter("furn_detail"));
-		furnVO.setFur_quantity(Integer.parseInt(request.getParameter("quantity")));
+		furnVO.setFur_quantity(Integer.parseInt(request.getParameter("furn_quantity")));
 		
-		adservice.getAdminShowRoomUpdate(showVO);
 		adservice.getAdminFurnUpdate(furnVO);
 		
+		String url = "/nimo/adShowRoom/adShowRoomDetail.ni?show_name="+showVO.getShow_name();
 		
-		return "/nimo/adShowRoom/adShowRoomDetail.ni";
+		return url;
+	}
+	
+	@RequestMapping("/adShowRoom/adShowUpdate.ni")
+	public String ShowUpdate(ShowRoomVO showVO, Model model, HttpServletRequest request) {
+
+		System.out.println(request.getParameter("show_name"));
+		System.out.println(request.getParameter("show_category"));
+		System.out.println(request.getParameter("show_detail"));
+		System.out.println(request.getParameter("show_img"));
+		
+		
+		showVO.setShow_name(request.getParameter("show_name"));
+		showVO.setShow_category(request.getParameter("show_category"));
+		showVO.setShow_img(request.getParameter("show_img"));
+		showVO.setShow_detail(request.getParameter("show_detail"));
+		
+		adservice.getAdminShowRoomUpdate(showVO);
+		
+		String url = "/nimo/adShowRoom/adShowRoomDetail.ni?show_name="+showVO.getShow_name();
+		
+		return url;
 	}
 	
 	@RequestMapping("/adShowRoom/adShowRoomDelete.ni")

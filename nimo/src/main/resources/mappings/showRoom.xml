@@ -105,14 +105,14 @@
 	<update id="adminShowRoomUpdate">
 		update
 		showroom set 
-		show_name=#{show_name}, show_category=#{show_category}, show_detail=#{show_detail}
+		show_name=#{show_name}, show_category=#{show_category}, show_detail=#{show_detail}, show_img=#{show_img}
 		where show_name=#{show_name}
 	</update>
 	<update id="adminFurnUpdate">
 		update
 		furniture set
-		fur_name=#{furn_name}, fur_price=#{furn_price}, fur_detail=#{furn_detail}, fur_quantity=#{furn_quantity}
-		where fur_code=#{furn_code}
+		fur_name=#{fur_name}, fur_price=#{fur_price}, fur_detail=#{fur_detail}, fur_quantity=#{fur_quantity}, fur_image=#{fur_image}
+		where fur_name=#{fur_name}
 	</update>
 	<delete id="adminShowRoomDelete">
 		delete from showroom where show_name=#{show_name}

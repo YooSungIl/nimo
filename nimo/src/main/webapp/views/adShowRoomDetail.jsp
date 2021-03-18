@@ -172,73 +172,109 @@
 			</div>
 		</div>
 	</section>
-	<form action="adShowRoomDetail.ni?show_name=${showRoomList.show_name}"
-		method="post">
-		<section class="ftco-section">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12 tab-wrap">
-						<a href="${showDetail.show_img}" class="image-popup prod-img-bg"><img
-							src="/nimo/resources/images/showImages/b/${showDetail.show_img}" class="img-fluid"
-							alt="Colorlib Template"></a>
-					</div>
-					<div class="col-md-12 tab-wrap" id="livingProduct">
-						<input type="text" class="quantity form-control input-number" name="show_name" value="${showDetail.show_name}">
-						<input type="text" class="quantity form-control input-number" name="show_category" value="${showDetail.show_category}">
-						<textarea name="show_detail">${showDetail.show_detail}</textarea>
-					</div>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 tab-wrap">
+					<a href="${showDetail.show_img}" class="image-popup prod-img-bg"><img
+						src="${showDetail.show_img}" class="img-fluid"
+						alt="Colorlib Template" name="show_img"></a>
+				</div>
+				<div class="col-md-12 tab-wrap" id="livingProduct">
+					<h5 style="margin-top: .5rem;">쇼룸 이름</h5>
+					<input type="text" class="quantity form-control input-number"
+						name="show_name" value="${showDetail.show_name}" style="margin-bottom: .5rem;">
+					<h5>카테고리</h5>
+					<input type="text" class="quantity form-control input-number"
+						name="show_category" value="${showDetail.show_category}" style="margin-bottom: .5rem;">
+					<h5>쇼룸 설명</h5>
+					<textarea name="show_detail" style="margin-bottom: .5rem;">${showDetail.show_detail}</textarea>
+					<input type="button" value="수정" class="btn btn-primary py-3 px-5" id="showup">
+				</div>
 
-					<div class="row mt-5">
-						<c:forEach items="${showRoomDetail_Furs}"
-							var="showRoomDetail_Furs">
-
-							<div class="row detailrow">
-								<div class="col-md-6">
-									<img src="${showRoomDetail_Furs.fur_image}" class="img-fluid"
-										alt="Colorlib Template">
-								</div>
-								<div class="col-md-6">
-									<div class="tab-content bg-light" id="v-pills-tabContent">
-										<div class="tab-pane fade show active" id="v-pills-1">
-											<div class="p-4">
-												<input type="text"
-													class="quantity form-control input-number" name="furn_name"
-													value="${showRoomDetail_Furs.fur_name}"> <input
-													type="text" class="quantity form-control input-number" name="furn_price"
-													value="${showRoomDetail_Furs.fur_price}">
-												<textarea name="fur_detail">${showRoomDetail_Furs.fur_detail}</textarea>
-												<div class="row">
-													<div class="col-lg-6 product-details pl-md-12 ftco-animate">
-														<div class="row mt-4">
-															<div class="input-group col-md- d-flex mb-3">
-																<input type="text" id="quantity" name="furn_quantity"
-																	class="quantity form-control input-number"
-																	value="${showRoomDetail_Furs.fur_quantity}">
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
+				<div class="row mt-5">
+					<c:forEach items="${showRoomDetail_Furs}" var="showRoomDetail_Furs">
+						<div class="row detailrow">
+							<div class="col-md-6">
+								<img name="furn_img" src="${showRoomDetail_Furs.fur_image}" class="img-fluid"
+									alt="Colorlib Template">
+							</div>
+							<div class="col-md-6">
+								<div class="tab-content bg-light" id="v-pills-tabContent">
+									<div class="tab-pane fade show active" id="v-pills-1">
+										<div class="p-4">
+											<h5>가구 이름</h5>
+											<input type="text" class="quantity form-control input-number"
+												name="furn_name" value="${showRoomDetail_Furs.fur_name}" style="margin-bottom: .5rem;">
+											<h5>가구 가격</h5>
+											<input type="text" class="quantity form-control input-number"
+												name="furn_price" value="${showRoomDetail_Furs.fur_price}" style="margin-bottom: .5rem;">
+											<h5>가구 설명</h5>
+											<textarea name="furn_detail">${showRoomDetail_Furs.fur_detail}</textarea>
+											<h5>가구 수량</h5>
+											<input type="text" class="quantity form-control input-number"
+												name="furn_quantity" value="${showRoomDetail_Furs.fur_quantity}" style="margin-bottom: .5rem;">
+											<input type="button" value="수정" class="btn btn-primary py-3 px-5" id="furnup">
 										</div>
 									</div>
 								</div>
 							</div>
-						</c:forEach>
-					</div>
-				</div>
-			</div>
-		</section>
-		<div class="row justify-content-end">
-			<div class="col col-lg-5 col-md-6 mt-5 ftco-animate">
-				<div>
-					<input type="submit" class="btn btn-primary py-3 px-5 mr-2"
-						value="수정"> <a
-						href="adShowRoomDelete.ni?show_name=${showDetail.show_name}"
-						class="btn btn-primary py-3 px-5">삭제</a>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
-	</form>
+	</section>
+	<div class="row justify-content-end">
+		<div class="col col-lg-5 col-md-6 mt-5 ftco-animate">
+			<div style="margin-bottom: .9rem;">
+				<a href="adShowRoomIndex.ni" class="btn btn-primary py-3 px-5">완료</a>
+				<a href="adShowRoomDelete.ni?show_name=${showDetail.show_name}"
+					class="btn btn-primary py-3 px-5">삭제</a>
+			</div>
+		</div>
+	</div>
 	<%@ include file="footer.jsp"%>
+	<script>
+	$(document).ready(function() {
+		$('input').click(function(e) {
+			if ($(this).attr('id') == 'showup') {
+				$.ajax({
+					url : "adShowUpdate.ni",
+					data : {
+						"show_name" : $('input[name=show_name]').val(),
+						"show_category" : $('input[name=show_category]').val(),
+						"show_detail" : $('textarea[name=show_detail]').val(),
+						"show_img" : $('img[name=show_img]').attr("src")	
+					},
+					dataType : "json",
+					type : "post",
+					success : function(data) { 
+						console.log("okok");
+					}	
+				});
+			} else if($(this).attr('id') == 'furnup') {
+				$.ajax({
+					url : "adFurnUpdate.ni",
+					data : {
+						"show_name" : $('input[name=show_name]').val(),
+						"furn_name" : $('input[name=furn_name]').val(),
+						"furn_price" : $('input[name=furn_price]').val(),
+						"furn_detail" : $('textarea[name=furn_detail]').val(),
+						"furn_quantity" : $('input[name=furn_quantity]').val(),
+						"furn_img" : $('img[name=furn_img]').attr("src")	
+					},
+					dataType : "json",
+					type : "post",
+					success : function(data) {
+						console.log("okok");
+					}
+				});
+			} else {	
+				console.log("nonono~!");
+			}
+		});
+	});
+	</script>
 </body>
 </html>

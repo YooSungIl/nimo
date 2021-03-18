@@ -72,10 +72,5 @@ public class AdminShowRoomServiceImpl implements AdminShowRoomService {
 
 		return addao.getAdminShowRoomGaseongbi(vo);
 	}
-	
-	
-	
-	
-	
 
 }

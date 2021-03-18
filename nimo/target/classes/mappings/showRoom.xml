@@ -105,27 +105,27 @@
 	<update id="adminShowRoomUpdate">
 		update
 		showroom set 
-		show_name=#{show_name}, show_category=#{show_category}, show_detail=#{show_detail}
+		show_name=#{show_name}, show_category=#{show_category}, show_detail=#{show_detail}, show_img=#{show_img}
 		where show_name=#{show_name}
 	</update>
 	<update id="adminFurnUpdate">
 		update
 		furniture set
-		fur_name=#{furn_name}, fur_price=#{furn_price}, fur_detail=#{furn_detail}, fur_quantity=#{furn_quantity}
-		where fur_code=#{furn_code}
+		fur_name=#{fur_name}, fur_price=#{fur_price}, fur_detail=#{fur_detail}, fur_quantity=#{fur_quantity}, fur_image=#{fur_image}
+		where fur_name=#{fur_name}
 	</update>
 	<delete id="adminShowRoomDelete">
 		delete from showroom where show_name=#{show_name}
 	</delete>
 	
 	<select id="ShowRoomBest" resultType="userShowRoom">
-		select show_name, show_category, show_detail, show_img from showroom where show_name in('거실에서 시간을 보낼 공', '따뜻한 원목과 클래식한 소품', '스마트하고 세련된 공간')
+		select show_name, show_category, show_detail, show_img from showroom where show_name in('거실에서 시간을 보낼 공간', '따뜻한 원목과 클래식한 소품', '스마트하고 세련된 공간')
 	</select>
 	<select id="ShowRoomRecommend" resultType="userShowRoom">
 		select show_name, show_category, show_detail, show_img from showroom where show_name in('차분한 거실 오아시스', '스마트하고 세련된 공간', '따뜻한 원목과 클래식한 소품')
 	</select>
 	<select id="ShowRoomGaseongbi" resultType="userShowRoom">
-		select show_name, show_category, show_detail, show_img from showroom where show_name in('차분한 거실 오아시스', '거실에서 시간을 보낼 공', '따뜻한 원목과 클래식한 소품')
+		select show_name, show_category, show_detail, show_img from showroom where show_name in('차분한 거실 오아시스', '거실에서 시간을 보낼 공간', '따뜻한 원목과 클래식한 소품')
 	</select>
 
 </mapper>

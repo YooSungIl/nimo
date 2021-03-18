@@ -184,41 +184,34 @@
 				</div>
 				<div class="col-md-12 tab-wrap" id="livingProduct">
 					<h5>쇼룸 이름</h5>
-					<input type="text" class="col-md-12" name="show-name"
-						placeholder="쇼룸 이름을 써주세요" style="margin-bottom: 20px;">
+					<input type="text" class="col-md-12" name="show-name" placeholder="쇼룸 이름을 써주세요" style="margin-bottom:20px;">
 					<h5>쇼룸 카테고리</h5>
-					<input type="text" class="col-md-12" name="show-category"
-						placeholder="쇼룸 카테고리를 써주세요" style="margin-bottom: 20px;">
+					<input type="text" class="col-md-12" name="show-category" placeholder="쇼룸 카테고리를 써주세요" style="margin-bottom:20px;">
 					<h5>쇼룸 설명</h5>
-					<textarea type="text" row="10" cols="50" class="col-md-12"
-						name="show-detail" placeholder="쇼룸 설명해 주세요"></textarea>
+					<textarea type="text" row="10" cols="50" class="col-md-12" name="show-detail" placeholder="쇼룸 설명해 주세요" ></textarea>
 				</div>
 
 				<div class="row mt-5" id="furnplus">
+				<form action="/showroom/"></form>
 					<div class="row detailrow">
 						<div class="col-md-6">
-							<form name="furn_img1" id="form">
-								<input type='file' id="furn_img_input1" style="display: none;">
-								<input type='hidden' id="furn_img_hidden1"> <img
-									id="image_furn1" class="img-fluid"
-									src="${nimo}/resources/images/du/plus.jpg"
-									style="width: 100; height: 100%;" />
+							<form name="furn_img" id="form">
+								<input type='file' id="furn_img_input" style="display: none;">
+								<input type='hidden' name="furn_img_hidden">
+								<img id="image_furn" class="img-fluid" src="${nimo}/resources/images/du/plus.jpg" style="width:100;height:100%;" />
 							</form>
 						</div>
 						<div class="col-md-6">
 							<div class="tab-content bg-light" id="v-pills-tabContent">
 								<div class="tab-pane fade show active" id="v-pills-1"
 									role="tabpanel" aria-labelledby="day-1-tab">
-									<div class="p-4" id="textField-1">
-										<h5 style="margin-left: 20px;">가구 이름</h5>
-										<input type="text" style="margin: 20px; width: 95%;"
-											placeholder="가구 이름 써주세요" name="furn-name">
-										<h5 style="margin-left: 20px;">가구 가격</h5>
-										<input type="text" style="margin: 20px; width: 95%;"
-											placeholder="가구 가격 써주세요" name="furn-price">
-										<h5 style="margin-left: 20px;">가구 설명</h5>
-										<textarea style="margin: 20px; width: 95%; height: 40%;"
-											placeholder="가구 설명 써주세요" name="furn-detail"></textarea>
+									<div class="p-4" id="textField-1" 	>
+										<h5 style="margin-left:20px;">가구 이름</h5>
+										<input type="text" style="margin:20px; width: 95%;" placeholder="가구 이름 써주세요" name="furn-name">
+										<h5 style="margin-left:20px;">가구 가격</h5>
+										<input type="text" style="margin:20px; width: 95%;" placeholder="가구 가격 써주세요" name="furn-price">
+										<h5 style="margin-left:20px;">가구 설명</h5>
+										<textarea style="margin:20px;width:95%;height:40%;" placeholder="가구 설명 써주세요" name="furn-detail"></textarea>
 									</div>
 								</div>
 							</div>
@@ -244,15 +237,14 @@
 	</section>
 
 	<%@ include file="footer.jsp"%>
+	
 	<script type="text/javascript">
-		var index = 2;
-		var imgid;
-		var obj;
-
+		var index = 1;
+		var imgId;
 		function readURL1(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
-
+	
 				reader.onload = function(e) {
 					$('#image_section').attr('src', e.target.result);
 				}
@@ -261,78 +253,59 @@
 				console.log("nonono~");
 			}
 		}
-
+		
 		$("#imgInput").change(function() {
 			readURL1(this);
 		});
- 
-		$("#image_section").click(
-				function(e) {
-					console.log("asdaqweqwasdsd");
-					document.show_img.show_img_input.value = document
-							.getElementById('image_section').src;
-					e.preventDefault();
-					$('#imgInput').click();
-				});
 
+		
 		function readURL2(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
-				console.log(imgid);
-
+	
 				reader.onload = function(e) {
-					$(this.attr('id')).attr('src', e.target.result);
+					console.log(imgId);
+					$('#'+imgId).attr('src', e.target.result);
+					console.log(imgId);
 				}
 				reader.readAsDataURL(input.files[0]);
-				console.log(input.files[0].name);
-
-				$.ajax({
-					url : "../admin/furnInfo.ni",
-					data : {
-						"fur_image0" : input.files[0].name
-					},
-					dataType : "json",
-					type : "post",
-					success : function(data) {
-						console.log(data);
-					}
-
-				})
 			} else {
 				console.log("nonono~");
 			}
 		}
-
-		$("#furn_img_input1").change(function() {
+		
+		$("#furn_img_input").change(function() {
 			readURL2(this);
 		});
-
-		$('img').click(
-				function(e) {
-					console.log($(this).attr('id'));
-					imgid = $(this).attr('id');
-					document.getElementById('furn_img_hidden1').value= document.getElementById(imgid).src;
-					e.preventDefault();
-					$('#furn_img_input1').click();
-				});
-
+				
+		$(document).on('click', 'img', function(e) {
+			imgId = $(this).attr('id');
+			if (imgId == 'image_furn') {
+				e.preventDefault();
+				$('#furn_img_input').click();
+			} else if (imgId == 'image_section') {
+				e.preventDefault();
+				$('#imgInput').click();
+			} else {
+				e.preventDefault();
+				console.log(imgId);
+				$('#furn_img_input').click();
+			}
+		});
 		$('#furnPlus')
 				.click(
 						function(e) {
 							console.log("asd");
 
-							$
-									.ajax({
-										url : "../admin/showRoomInsert.ni",
+							$.ajax({
+										url : "/nimo/adShowRoom/showRoomInsert.ni",
 										success : function(data) {
 											var str = "<div class='row detailrow'>";
 											str += "<div class='col-md-6'>";
 											str += "<form name='furn_img"+index+"' id='form'>";
 											str += "<input type='file' id='furn_img_input"+index+"' style='display: none;'>";
 											str += "<input type='hidden' name='furn_img_hidden"+index+"'>";
-											str += "<img id='image_furn"
-													+ index
-													+ "' class='img-fluid' src='${nimo}/resources/images/du/plus.jpg' style='width:100;height:100%;'/>";
+											str += "<img id='image_furn"+ index + "' class='img-fluid' src='${nimo}/resources/images/du/plus.jpg' style='width:100;height:100%;'/>";
 											str += "</form></div>";
 											str += "<div class='col-md-6'><div class='tab-content bg-light' id='v-pills-tabContent'>";
 											str += "<div class='tab-pane fade show active' id='v-pills-1' role='tabpanel' aria-labelledby='day-1-tab'>";
@@ -349,36 +322,6 @@
 											console.log(str);
 										}
 									});
-
-								function readURL2(input) {
-									if (input.files && input.files[0]) {
-										var reader = new FileReader();
-
-										reader.onload = function(e) {
-											$('#image_furn' + index).attr('src',
-													e.target.result);
-										}
-										reader.readAsDataURL(input.files[0]);
-
-									} else {
-										console.log("nonono~");
-									}
-								}
-
-								$("#furn_img_input"+index).change(function() {
-									readURL2(this);
-								});
-
-								$("#image_furn" + index)
-										.click(
-												function(e) {
-													console
-															.log("asdqweasdzxcadqweasd12312312321");
-													document.getElementById('furn_img_hidden'+index).value = document.getElementById('image_furn'+index).src;
-													e.preventDefault();
-													$('#furn_img_input' + index)
-															.click();
-												});
 								index++;
 						});
 	</script>

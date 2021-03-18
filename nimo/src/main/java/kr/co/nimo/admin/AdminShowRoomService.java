@@ -19,4 +19,6 @@ public interface AdminShowRoomService {
 	List<ShowRoomVO> getAdminShowRoomBest(ShowRoomVO vo);
 	List<ShowRoomVO> getAdminShowRoomRecommend(ShowRoomVO vo);
 	List<ShowRoomVO> getAdminShowRoomGaseongbi(ShowRoomVO vo);
+	
+	
 }
