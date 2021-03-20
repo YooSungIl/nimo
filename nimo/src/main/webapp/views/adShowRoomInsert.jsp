@@ -30,6 +30,22 @@
 
 <link rel="stylesheet" href="${nimo}/resources/css/flaticon.css">
 <link rel="stylesheet" href="${nimo}/resources/css/style.css">
+
+<script type="text/javascript">
+function showAdd(){
+	var showForm = document.showAdd;
+	var show_img = showForm.show_img.src;
+	var show_name = showForm.show_name.value;
+	var show_category = showForm.show_category.value;
+	var show_detail = showForm.show_detail.value;
+	
+	if(!show_img || !show_name || !show_category || !show_detail) {
+		alery("이미지와 쇼이름, 쇼카테고리, 쇼설명을 입력해 주세요.")
+	} else {
+		showForm.submit();
+	}
+}
+</script>
 </head>
 <body>
 
@@ -172,34 +188,31 @@
 	</section>
 
 	<section class="ftco-section">
+	<form  action="/nimo/adShowRoom/showRoomInsert.ni" method="post" name="showAdd">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 mb-5 ftco-animate">
-					<form name="show_img" id="form">
 						<input type='file' id="imgInput" style="display: none;"> <input
 							type='hidden' name="show_img_input"> <img
-							id="image_section" class="img-fluid"
+							id="image_section" class="img-fluid" name="show_img"
 							src="${nimo}/resources/images/du/plus.jpg" />
-					</form>
 				</div>
 				<div class="col-md-12 tab-wrap" id="livingProduct">
 					<h5>쇼룸 이름</h5>
-					<input type="text" class="col-md-12" name="show-name" placeholder="쇼룸 이름을 써주세요" style="margin-bottom:20px;">
+					<input type="text" class="col-md-12" name="show_name" placeholder="쇼룸 이름을 써주세요" style="margin-bottom:20px;">
 					<h5>쇼룸 카테고리</h5>
-					<input type="text" class="col-md-12" name="show-category" placeholder="쇼룸 카테고리를 써주세요" style="margin-bottom:20px;">
+					<input type="text" class="col-md-12" name="show_category" placeholder="쇼룸 카테고리를 써주세요" style="margin-bottom:20px;">
 					<h5>쇼룸 설명</h5>
-					<textarea type="text" row="10" cols="50" class="col-md-12" name="show-detail" placeholder="쇼룸 설명해 주세요" ></textarea>
+					<textarea type="text" row="10" cols="50" class="col-md-12" name="show_detail" placeholder="쇼룸 설명해 주세요" ></textarea>
+					<input type='hidden' name="furn_code">
 				</div>
 
 				<div class="row mt-5" id="furnplus">
-				<form action="/showroom/"></form>
 					<div class="row detailrow">
 						<div class="col-md-6">
-							<form name="furn_img" id="form">
 								<input type='file' id="furn_img_input" style="display: none;">
 								<input type='hidden' name="furn_img_hidden">
 								<img id="image_furn" class="img-fluid" src="${nimo}/resources/images/du/plus.jpg" style="width:100;height:100%;" />
-							</form>
 						</div>
 						<div class="col-md-6">
 							<div class="tab-content bg-light" id="v-pills-tabContent">
@@ -225,7 +238,7 @@
 								id="furnPlus">가구추가</button>
 						</div>
 						<div class="col-md-4">
-							<a href="#" class="btn btn-primary d-block">쇼룸추가</a>
+							<input type="button" class="btn btn-primary d-block" onclick="showAdd()" value="쇼룸추가"/>
 						</div>
 						<div class="col-md-4">
 							<a href="#" class="btn btn-primary d-block">취소</a>
@@ -234,13 +247,15 @@
 				</div>
 			</div>
 		</div>
+		</form>
 	</section>
 
 	<%@ include file="footer.jsp"%>
 	
 	<script type="text/javascript">
-		var index = 1;
+		var index = 2;
 		var imgId;
+		var su;
 		function readURL1(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
@@ -266,7 +281,27 @@
 				reader.onload = function(e) {
 					console.log(imgId);
 					$('#'+imgId).attr('src', e.target.result);
-					console.log(imgId);
+					$.ajax({
+						url : "/nimo/adShowRoom/furnInfo.ni",
+						data : {
+							"fur_image" : input.files[0].name
+						},
+						dataType : "json",
+						type : "POST",
+						success : function(data) {
+							console.log("ajax"+su);
+							if (su != 0) {
+								console.log("input[type=text][name=furn-name" + su + "]");
+								$("input[type=text][name=furn-name" + su + "]").val(data.data.fur_name);
+								$("input[type=text][name=furn-price" + su + "]").val(data.data.fur_price);
+								$("textarea[name=furn-detail" + su + "]").val(data.data.fur_subdetail1_1);
+							} else {
+								$("input[type=text][name=furn-name]").val(data.data.fur_name);
+								$("input[type=text][name=furn-price]").val(data.data.fur_price);
+								$("textarea[name=furn-detail]").val(data.data.fur_subdetail1_1);
+							}
+						}
+					});
 				}
 				reader.readAsDataURL(input.files[0]);
 			} else {
@@ -275,20 +310,24 @@
 		}
 		
 		$("#furn_img_input").change(function() {
+			console.log("cl1");
 			readURL2(this);
 		});
 				
 		$(document).on('click', 'img', function(e) {
 			imgId = $(this).attr('id');
+			console.log(imgId);
 			if (imgId == 'image_furn') {
 				e.preventDefault();
+				su = 0;
 				$('#furn_img_input').click();
 			} else if (imgId == 'image_section') {
 				e.preventDefault();
 				$('#imgInput').click();
 			} else {
 				e.preventDefault();
-				console.log(imgId);
+				su = imgId.charAt(imgId.length-1);
+				console.log(su);
 				$('#furn_img_input').click();
 			}
 		});
@@ -302,20 +341,19 @@
 										success : function(data) {
 											var str = "<div class='row detailrow'>";
 											str += "<div class='col-md-6'>";
-											str += "<form name='furn_img"+index+"' id='form'>";
 											str += "<input type='file' id='furn_img_input"+index+"' style='display: none;'>";
 											str += "<input type='hidden' name='furn_img_hidden"+index+"'>";
 											str += "<img id='image_furn"+ index + "' class='img-fluid' src='${nimo}/resources/images/du/plus.jpg' style='width:100;height:100%;'/>";
-											str += "</form></div>";
+											str += "</div>";
 											str += "<div class='col-md-6'><div class='tab-content bg-light' id='v-pills-tabContent'>";
 											str += "<div class='tab-pane fade show active' id='v-pills-1' role='tabpanel' aria-labelledby='day-1-tab'>";
 											str += "<div class='p-4' id='textField-1'>";
 											str += "<h5 style='margin-left:20px;'>가구 이름</h5>";
-											str += "<input type='text' style='margin:20px; width: 95%;' placeholder='가구 이름 써주세요' name='furn-name'>";
+											str += "<input type='text' style='margin:20px; width: 95%;' placeholder='가구 이름 써주세요' name='furn-name"+index+"'>";
 											str += "<h5 style='margin-left:20px;'>가구 가격</h5>";
-											str += "<input type='text' style='margin:20px; width: 95%;' placeholder='가구 가격 써주세요' name='furn-price'>";
+											str += "<input type='text' style='margin:20px; width: 95%;' placeholder='가구 가격 써주세요' name='furn-price"+index+"'>";
 											str += "<h5 style='margin-left:20px;'>가구 설명</h5>";
-											str += "<textarea style='margin:20px;width:95%;height:40%;' placeholder='가구 설명 써주세요' name='furn-detail'></textarea>";
+											str += "<textarea style='margin:20px;width:95%;height:40%;' placeholder='가구 설명 써주세요' name='furn-detail"+index+"'></textarea>";
 											str += "</div></div></div></div></div>";
 											$("#furnplus").append(str);
 											

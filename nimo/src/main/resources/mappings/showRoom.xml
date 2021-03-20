@@ -99,7 +99,7 @@
 	
 	<select id="adminFurnInfo" resultType="userFurniture">
 		select 
-		fur_name, fur_price, fur_quantity, fur_detail from furniture where fur_image = #{fur_image}
+		fur_name, fur_price, fur_quantity, fur_subdetail1_1, fur_code from furniture where fur_image like concat('%', #{fur_image})
 	</select>
 	
 	<update id="adminShowRoomUpdate">

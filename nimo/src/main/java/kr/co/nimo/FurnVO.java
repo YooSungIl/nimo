@@ -8,7 +8,7 @@ public class FurnVO {
 	private String fur_subimage1;
 	private String fur_subimage2;
 	private String fur_subimage3;
-	private String fur_detail;
+	private String fur_option;
 	private String fur_subdetail1_1;
 	private String fur_subdetail1_2;
 	private String fur_subdetail2_1;
@@ -78,11 +78,11 @@ public class FurnVO {
 	}
 
 	public String getFur_detail() {
-		return fur_detail;
+		return fur_option;
 	}
 
 	public void setFur_detail(String fur_detail) {
-		this.fur_detail = fur_detail;
+		this.fur_option = fur_detail;
 	}
 
 	public String getFur_subdetail1_1() {

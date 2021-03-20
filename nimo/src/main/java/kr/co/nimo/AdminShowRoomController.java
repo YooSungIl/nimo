@@ -1,11 +1,15 @@
 package kr.co.nimo;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.nimo.admin.AdminShowRoomService;
 
@@ -15,18 +19,26 @@ public class AdminShowRoomController {
 	@Autowired
 	private AdminShowRoomService adservice;
 	
-	@RequestMapping("admin/furnInfo.ni")
-	public String furnInfo(FurnVO vo, Model model, String fur_image) {
-		System.out.println(fur_image);
+	
+	@RequestMapping(value = "/adShowRoom/furnInfo.ni", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> furnInfo(FurnVO vo, Model model, String fur_image) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		
 		vo.setFur_image(fur_image);
 		
-		model.addAttribute("furnInfo", adservice.getFurnInfo(vo));
-		
-		return "showRoomInsert";
+		result.put("data", adservice.getFurnInfo(vo));
+		return result;
 	}
 	
-	@RequestMapping("/adShowRoom/showRoomInsert.ni")
-	public String showRoomInsert() {
+	@RequestMapping(value="/adShowRoom/showRoomInsert.ni", method = RequestMethod.POST)
+	public String showRoomInsert(ShowRoomVO vo, HttpServletRequest req) {
+		
+		System.out.println("show_img");
+		
+		vo.setShow_name(req.getParameter("show_name"));
+		vo.setShow_category(req.getParameter("show_category"));
+		vo.setShow_detail(req.getParameter("show_detail"));
 		return "adShowRoomInsert";
 	}
 	
@@ -50,14 +62,6 @@ public class AdminShowRoomController {
 	@RequestMapping("/adShowRoom/adFurnUpdate.ni")
 	public String furnUpdate(ShowRoomVO showVO, FurnVO furnVO, Model model, HttpServletRequest request) {
 
-		System.out.println(request.getParameter("show_name"));
-		System.out.println(request.getParameter("furn_name"));
-		System.out.println(Integer.parseInt(request.getParameter("furn_price")));
-		System.out.println(request.getParameter("furn_detail"));
-		System.out.println(request.getParameter("furn_img"));
-		System.out.println(Integer.parseInt(request.getParameter("furn_quantity")));
-		
-		
 		showVO.setShow_name(request.getParameter("show_name"));
 		furnVO.setFur_name(request.getParameter("furn_name"));
 		furnVO.setFur_image(request.getParameter("furn_img"));
@@ -74,12 +78,6 @@ public class AdminShowRoomController {
 	
 	@RequestMapping("/adShowRoom/adShowUpdate.ni")
 	public String ShowUpdate(ShowRoomVO showVO, Model model, HttpServletRequest request) {
-
-		System.out.println(request.getParameter("show_name"));
-		System.out.println(request.getParameter("show_category"));
-		System.out.println(request.getParameter("show_detail"));
-		System.out.println(request.getParameter("show_img"));
-		
 		
 		showVO.setShow_name(request.getParameter("show_name"));
 		showVO.setShow_category(request.getParameter("show_category"));
@@ -95,16 +93,13 @@ public class AdminShowRoomController {
 	
 	@RequestMapping("/adShowRoom/adShowRoomDelete.ni")
 	public String showRoomDelete(ShowRoomVO vo) {
-		System.out.println("OKOK");
 		adservice.getAdminShowRoomDelete(vo);
-		System.out.println("iasd");
 		return "/nimo/adShowRoom/adShowRoomIndex.ni";
 	}
 	
 	@RequestMapping("/adShowRoom/adShowRoomIndex.ni")
 	public String ShowRoomIndex(ShowRoomVO showVO, Model model) {
-		System.out.println("Index");
-		
+
 		model.addAttribute("bestShowRoom", adservice.getAdminShowRoomBest(showVO));
 		model.addAttribute("recommendShowRoom", adservice.getAdminShowRoomRecommend(showVO));
 		model.addAttribute("gaseongbiShowRoom", adservice.getAdminShowRoomGaseongbi(showVO));
