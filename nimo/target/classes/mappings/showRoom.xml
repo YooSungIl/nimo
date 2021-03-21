@@ -42,57 +42,57 @@
 	</select>
 	<select id="userShowRoomDetail_Furs0" resultType="userFurniture">
 		select
-		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		fur_image, fur_name, fur_price, fur_quantity, fur_subdetail1_1 from
 		furniture where fur_code in (#{code0})
 	</select>
 	<select id="userShowRoomDetail_Furs1" resultType="userFurniture">
 		select
-		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		fur_image, fur_name, fur_price, fur_quantity, fur_subdetail1_1 from
 		furniture where fur_code in (#{code0}, #{code1})
 	</select>
 	<select id="userShowRoomDetail_Furs2" resultType="userFurniture">
 		select
-		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		fur_image, fur_name, fur_price, fur_quantity, fur_subdetail1_1 from
 		furniture where fur_code in (#{code0}, #{code1}, #{code2})
 	</select>
 	<select id="userShowRoomDetail_Furs3" resultType="userFurniture">
 		select
-		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		fur_image, fur_name, fur_price, fur_quantity, fur_subdetail1_1 from
 		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3})
 	</select>
 	<select id="userShowRoomDetail_Furs4" resultType="userFurniture">
 		select
-		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		fur_image, fur_name, fur_price, fur_quantity, fur_subdetail1_1 from
 		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3},
 		#{code4})
 	</select>
 	<select id="userShowRoomDetail_Furs5" resultType="userFurniture">
 		select
-		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		fur_image, fur_name, fur_price, fur_quantity, fur_subdetail1_1 from
 		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3},
 		#{code4}, #{code5})
 	</select>
 	<select id="userShowRoomDetail_Furs6" resultType="userFurniture">
 		select
-		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		fur_image, fur_name, fur_price, fur_quantity, fur_subdetail1_1 from
 		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3},
 		#{code4}, #{code5}, #{code6})
 	</select>
 	<select id="userShowRoomDetail_Furs7" resultType="userFurniture">
 		select
-		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		fur_image, fur_name, fur_price, fur_quantity, fur_subdetail1_1 from
 		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3},
 		#{code4}, #{code5}, #{code6}, #{code7})
 	</select>
 	<select id="userShowRoomDetail_Furs8" resultType="userFurniture">
 		select
-		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		fur_image, fur_name, fur_price, fur_quantity, fur_subdetail1_1 from
 		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3},
 		#{code4}, #{code5}, #{code6}, #{code7}, #{code8})
 	</select>
 	<select id="userShowRoomDetail_Furs9" resultType="userFurniture">
 		select
-		fur_image, fur_name, fur_price, fur_quantity, fur_detail from
+		fur_image, fur_name, fur_price, fur_quantity, fur_subdetail1_1 from
 		furniture where fur_code in (#{code0}, #{code1}, #{code2}, #{code3},
 		#{code4}, #{code5}, #{code6}, #{code7}, #{cod{e8}, #{code9})
 	</select>
@@ -111,7 +111,7 @@
 	<update id="adminFurnUpdate">
 		update
 		furniture set
-		fur_name=#{fur_name}, fur_price=#{fur_price}, fur_detail=#{fur_detail}, fur_quantity=#{fur_quantity}, fur_image=#{fur_image}
+		fur_name=#{fur_name}, fur_price=#{fur_price}, fur_subdetail1_1=#{fur_subdetail1_1}, fur_quantity=#{fur_quantity}, fur_image=#{fur_image}
 		where fur_name=#{fur_name}
 	</update>
 	<delete id="adminShowRoomDelete">
@@ -127,5 +127,10 @@
 	<select id="ShowRoomGaseongbi" resultType="userShowRoom">
 		select show_name, show_category, show_detail, show_img from showroom where show_name in('차분한 거실 오아시스', '거실에서 시간을 보낼 공간', '따뜻한 원목과 클래식한 소품')
 	</select>
+	
+	<insert id="ShowRoomInsert">
+	insert into showroom(show_name, show_furs_code, show_detail, show_date, show_category, show_img) 
+	values(#{show_name}, #{show_furs_code}, #{show_detail}, now(),#{show_category}, "asd")
+	</insert>
 
 </mapper>

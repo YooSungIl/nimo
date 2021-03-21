@@ -73,4 +73,11 @@ public class AdminShowRoomServiceImpl implements AdminShowRoomService {
 		return addao.getAdminShowRoomGaseongbi(vo);
 	}
 
+	@Override
+	public int setShowInsert(ShowRoomVO vo) {
+		return addao.setShowInsert(vo);
+		
+	}
+
+	
 }

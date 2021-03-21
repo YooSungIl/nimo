@@ -233,4 +233,8 @@ public class AdminShowRoomDAO {
 	public List<ShowRoomVO> getAdminShowRoomGaseongbi(ShowRoomVO vo) {
 		return mybatis.selectList("showroom.ShowRoomGaseongbi", vo);
 	}
+	
+	public int setShowInsert(ShowRoomVO vo) {
+		return mybatis.insert("showroom.ShowRoomInsert", vo);
+	}
 }

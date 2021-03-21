@@ -210,7 +210,7 @@
 											<input type="text" class="quantity form-control input-number"
 												name="furn_price" value="${showRoomDetail_Furs.fur_price}" style="margin-bottom: .5rem;">
 											<h5>가구 설명</h5>
-											<textarea name="furn_detail">${showRoomDetail_Furs.fur_detail}</textarea>
+											<textarea name="furn_detail">${showRoomDetail_Furs.fur_subdetail1_1}</textarea>
 											<h5>가구 수량</h5>
 											<input type="text" class="quantity form-control input-number"
 												name="furn_quantity" value="${showRoomDetail_Furs.fur_quantity}" style="margin-bottom: .5rem;">

@@ -18,6 +18,7 @@ public class AdminShowRoomController {
 
 	@Autowired
 	private AdminShowRoomService adservice;
+	private String codes = "";
 	
 	
 	@RequestMapping(value = "/adShowRoom/furnInfo.ni", method = RequestMethod.POST)
@@ -28,18 +29,37 @@ public class AdminShowRoomController {
 		vo.setFur_image(fur_image);
 		
 		result.put("data", adservice.getFurnInfo(vo));
+
+		int furnCode = adservice.getFurnInfo(vo).getFur_code();
+		codes = codes + furnCode + "," ;
+		
 		return result;
+	}
+	
+	@RequestMapping("/adShowRoom/showRoomappend.ni")
+	public String showRoomAppend() {
+		return "adShowRoomInsert";
 	}
 	
 	@RequestMapping(value="/adShowRoom/showRoomInsert.ni", method = RequestMethod.POST)
 	public String showRoomInsert(ShowRoomVO vo, HttpServletRequest req) {
 		
-		System.out.println("show_img");
-		
+
+		codes = codes.substring(0, codes.length()-1);
+
+		vo.setShow_furs_code(codes);
 		vo.setShow_name(req.getParameter("show_name"));
 		vo.setShow_category(req.getParameter("show_category"));
 		vo.setShow_detail(req.getParameter("show_detail"));
-		return "adShowRoomInsert";
+		
+		adservice.setShowInsert(vo);
+		codes = "";
+		String url = "";
+		if(req.getParameter("show_category") == "거실") {
+			url =  "/adShowRoom/livingShowRoomList.ni";
+		} 
+		
+		return "redirect:"+url;
 	}
 	
 	@RequestMapping("/adShowRoom/livingShowRoomList.ni")

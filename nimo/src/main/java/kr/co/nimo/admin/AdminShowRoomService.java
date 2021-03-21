@@ -20,5 +20,7 @@ public interface AdminShowRoomService {
 	List<ShowRoomVO> getAdminShowRoomRecommend(ShowRoomVO vo);
 	List<ShowRoomVO> getAdminShowRoomGaseongbi(ShowRoomVO vo);
 	
+	int setShowInsert(ShowRoomVO vo);
+	
 	
 }

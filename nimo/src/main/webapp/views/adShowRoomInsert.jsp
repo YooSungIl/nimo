@@ -31,21 +31,6 @@
 <link rel="stylesheet" href="${nimo}/resources/css/flaticon.css">
 <link rel="stylesheet" href="${nimo}/resources/css/style.css">
 
-<script type="text/javascript">
-function showAdd(){
-	var showForm = document.showAdd;
-	var show_img = showForm.show_img.src;
-	var show_name = showForm.show_name.value;
-	var show_category = showForm.show_category.value;
-	var show_detail = showForm.show_detail.value;
-	
-	if(!show_img || !show_name || !show_category || !show_detail) {
-		alery("이미지와 쇼이름, 쇼카테고리, 쇼설명을 입력해 주세요.")
-	} else {
-		showForm.submit();
-	}
-}
-</script>
 </head>
 <body>
 
@@ -238,7 +223,7 @@ function showAdd(){
 								id="furnPlus">가구추가</button>
 						</div>
 						<div class="col-md-4">
-							<input type="button" class="btn btn-primary d-block" onclick="showAdd()" value="쇼룸추가"/>
+							<input type="submit" class="btn btn-primary d-block" value="쇼룸추가"/>
 						</div>
 						<div class="col-md-4">
 							<a href="#" class="btn btn-primary d-block">취소</a>
@@ -262,6 +247,7 @@ function showAdd(){
 	
 				reader.onload = function(e) {
 					$('#image_section').attr('src', e.target.result);
+					console.log(e.target.result);
 				}
 				reader.readAsDataURL(input.files[0]);
 			} else {
@@ -337,7 +323,7 @@ function showAdd(){
 							console.log("asd");
 
 							$.ajax({
-										url : "/nimo/adShowRoom/showRoomInsert.ni",
+										url : "/nimo/adShowRoom/showRoomappend.ni",
 										success : function(data) {
 											var str = "<div class='row detailrow'>";
 											str += "<div class='col-md-6'>";

@@ -201,7 +201,7 @@
 										<div class="p-4">
 											<h5 class="mb-4">${showRoomDetail_Furs.fur_name}</h5>
 											<h5 class="price">${showRoomDetail_Furs.fur_price}</h5>
-											<p>${showRoomDetail_Furs.fur_detail}</p>
+											<p>${showRoomDetail_Furs.fur_subdetail1_1}</p>
 											<h5 class="mb-4"></h5>
 
 											<div class="row">
@@ -269,7 +269,7 @@
 									<td>
 										<div class="email">
 											<span>${showRoomDetail_Furs.fur_name}</span>
-											<span>${showRoomDetail_Furs.fur_detail}</span>
+											<span>${showRoomDetail_Furs.fur_subdetail1_1}</span>
 										</div>
 									</td>
 									<td class="pr">${showRoomDetail_Furs.fur_price}</td>
