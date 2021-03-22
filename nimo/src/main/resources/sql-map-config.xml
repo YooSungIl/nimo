@@ -7,14 +7,22 @@
  	<!-- Alias 설정 -->
  	<typeAliases>
  		<!-- 각자 VO에 맞게 별칭 설정 -->
- 		<typeAlias alias="userShowRoom" type="kr.co.nimo.ShowRoomVO"/>
- 		<typeAlias alias="userFurniture" type="kr.co.nimo.FurnVO" />
+ 		<typeAlias alias="user" type="kr.co.nimo.member.user.UserVO"/>
+		<typeAlias alias="ufur" type="kr.co.nimo.furniture.user.UserFurnVO" />
+		<typeAlias alias="us" type="kr.co.nimo.furniture.user.SearchVO" />
+		<typeAlias alias="afur" type="kr.co.nimo.furniture.admin.AdminFurnVO" />
+		<typeAlias alias="userShowRoom" type="kr.co.nimo.showroom.ShowRoomVO"/>
+ 		<typeAlias alias="userFurniture" type="kr.co.nimo.showroom.FurnVO" />
  	</typeAliases>
  	
  	<!-- SQL Mapper 설정 -->
  	<mappers>
  		<!-- 각자 Mapper파일에 맞게 경로 및 파일명 설정 -->
- 		<mapper resource="mappings/showRoom.xml" />
+ 		<mapper resource="mappings/user-mapping.xml" />
+ 		<mapper resource="mappings/admin-mapping.xml" />
+		<mapper resource="mappings/userFur-mapping.xml" />
+		<mapper resource="mappings/adminFur-mapping.xml" />
+		<mapper resource="mappings/showRoom.xml" />
  	</mappers>
  
  </configuration>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="UserDAO">
+	
+	<select id="checkUser" resultType="user">
+		select id, pwd, name, stat, role from users where id=#{id}
+	</select>
+	
+	<insert id="joinUser">
+		insert into users ( id,
+							pwd, 
+							name, 
+							phone, 
+							address, 
+							stat, 
+							platform, 
+							role)
+					values( #{id},
+							#{pwd},
+							#{name},
+							#{phone},
+							#{address},
+							'Y',
+							<choose>
+								<when test="#{platform} == 'nimo'">'nimo'</when>
+								<otherwise>#{platform}</otherwise>
+							</choose>,
+							'ROLE_USER');
+	</insert>
+	
+<!-- 플랫폼에 따른 가입 쿼리문 	
+	<insert id="joinUserByPlatform">
+		insert into users ( id,
+							pwd, 
+							name, 
+							phone, 
+							address, 
+							stat, 
+							platform, 
+							role) 
+					values( #{id},
+							#{pwd},
+							#{name},
+							#{phone},
+							#{address},
+							'Y',
+							#{platform},
+							'ROLE_USER');
+	</insert> -->
+	
+	<select id="checkJoin" resultType="int">
+		select count(*) from users where id=#{id}
+	</select>
+	
+	<select id="checkJoinByPlatForm" resultType="user">
+		select id, platform, role from users where id=#{id}
+	</select>
+	
+	<select id="searchPwd" resultType="int">
+		select count(*) from users where id=#{id} and phone=#{phone}
+	</select>
+	
+	<update id="newPwd">
+		update users set pwd=#{pwd} where id=#{id}
+	</update>
+	
+ 	<!--<select id="googleLogin" resultType="user">
+		select * from users where id=#{id} and pwd=#{pwd}
+	</select> -->
+	
+	<!-- 사용자와 관리자 동시사용 -->
+	<select id="getUser" resultType="user" >
+		SELECT * FROM users WHERE id = #{id}
+	</select>
+	
+	<!-- 사용자와 관리자 동시사용 -->
+	<update id="updateUser" parameterType="user" >
+		UPDATE 
+			users 
+		SET 
+		id = #{id},
+		name = #{name},
+		address = #{address},
+		phone = #{phone}
+		
+		WHERE 
+		id = #{id}
+	</update>
+	
+	<!-- 사용자와 관리자 동시사용 -->
+	<update id="updateUserPassword">
+		UPDATE 
+			users 
+		SET 
+			pwd = #{pwd}
+		WHERE 
+			id = #{id}
+	</update>
+	
+
+	<!-- 유저가 삭제(비활성화) 유저만 사용 -->
+	<update id="userDelete" > 
+		UPDATE 
+			users
+		SET
+			stat = 'N' 
+		WHERE 
+			id= #{ id }
+	</update>
+
+ </mapper>

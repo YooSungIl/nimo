@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="kr.co.nimo.furniture.admin.impl.AdminFurnDAO">
+ 	<select id="getPage" resultType="int">
+	 select count(*) from furniture where fur_category = "의자"
+	</select>
+	<select id="getFurList" resultType="afur">
+		select * from furniture where fur_category = "의자" limit #{pagenum}, 12
+	</select>
+	<select id="getFurDetail" resultType="afur">
+		select * from furniture where fur_code = #{ num }
+	</select>
+	<select id="getFurCode" resultType="int">
+		select max(fur_code) from furniture
+	</select>
+	<insert id="getFurInsert" parameterType="afur">
+		insert into furniture (fur_name, fur_option, fur_image, fur_subimage1, fur_subimage2, fur_subimage3, 
+		fur_subdetail1_1, fur_subdetail1_2, fur_subdetail2_1, fur_subdetail2_2, fur_subdetail3_1, fur_subdetail3_2, 
+		fur_quantity, fur_price, fur_category, fur_date)
+		values ( #{fur_name}, #{fur_option}, #{fur_image}, #{fur_subimage1}, #{fur_subimage2}, #{fur_subimage3}, 
+		#{fur_subdetail1_1}, #{fur_subdetail1_2}, #{fur_subdetail2_1}, #{fur_subdetail2_2}, #{fur_subdetail3_1}, #{fur_subdetail3_2}, 
+		#{fur_quantity}, #{fur_price}, #{fur_category}, now() ) 
+	</insert>
+	<insert id="getFurUpdate" parameterType="afur">
+		update furniture set fur_name=#{fur_name}, fur_image=#{fur_image}, fur_subimage1=#{fur_subimage1}, fur_subimage2=#{fur_subimage2}, fur_subimage3=#{fur_subimage3},
+		fur_subdetail1_1=#{fur_subdetail1_1}, fur_subdetail1_2=#{fur_subdetail1_2}, fur_subdetail2_1=#{fur_subdetail2_1},  fur_subdetail2_2=#{fur_subdetail2_2}, fur_subdetail3_1=#{fur_subdetail3_1}, fur_subdetail3_2=#{fur_subdetail3_2},
+		fur_quantity=#{fur_quantity}, fur_price=#{fur_price}, fur_option=#{fur_option}
+		where fur_code=#{fur_code}
+	</insert>
+	<delete id="getFurDelete">
+		delete from furniture where fur_code=#{fur_code}
+	</delete>
+	
+ </mapper>

@@ -4,8 +4,8 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 	
@@ -26,11 +26,11 @@
 		<property name="configLocation" value="classpath:sql-map-config.xml" />
 	</bean>
 	
-	<bean class="org.mybatis.spring.SqlSessionTemplate">
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
 		<constructor-arg ref="sqlSession"></constructor-arg>
 	</bean>
 	
-	<!-- Transaction 설정  --> 
+	<!-- Transaction 설정 -->   
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>   
 	</bean>
@@ -41,10 +41,10 @@
 			<tx:method name="*" />
 		</tx:attributes>
 	</tx:advice>
-	 
+	<!--  -->
 	<aop:config>
 		<aop:pointcut id="txPointcut" expression="execution(* kr.co.nimo..*(..))"/>
 		<aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>
-	</aop:config>  
+	</aop:config>
 		
 </beans>

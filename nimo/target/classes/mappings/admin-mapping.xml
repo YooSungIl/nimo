@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="AdminDAO">
+
+	<!-- 페이징용 검색조건sql -->
+ 	<sql id="searchCondition">
+		<if test="searchType != null">
+			<if test="searchType == 'id'.toString()">
+				and id like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'name'.toString()">
+				and name like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'address'.toString()">
+				and address like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'NUser'.toString()">
+				and address like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'YUser'.toString()">
+				and address like CONCAT('%', #{keyword}, '%')
+			</if>
+		</if>
+	</sql>
+ 
+	<select id="getUserList" resultType="user" parameterType="kr.co.nimo.member.paging.SearchCriteria">
+		SELECT  
+			*
+		FROM 
+			users
+		WHERE
+			stat='Y'
+			<include refid="searchCondition"></include>
+ 		ORDER BY reg_date DESC
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="getNUserList" resultType="user" parameterType="kr.co.nimo.member.paging.SearchCriteria">
+		SELECT  
+			*
+		FROM 
+			users
+		WHERE
+			stat='N'
+			<include refid="searchCondition"></include>
+		ORDER BY reg_date DESC
+		LIMIT #{pageStart}, #{perPageNum}
+	</select>
+	
+	<select id="getUserCount" resultType="int" parameterType="kr.co.nimo.member.paging.SearchCriteria">
+		SELECT 
+			COUNT(*)
+		FROM 
+			users
+		WHERE
+			stat='Y'
+			<include refid="searchCondition"></include>
+		AND reg_date > 0
+	</select>
+	
+	<select id="getNUserCount" resultType="int" parameterType="kr.co.nimo.member.paging.SearchCriteria">
+		SELECT 
+			COUNT(*)
+		FROM 
+			users
+		WHERE
+			stat='N'
+			<include refid="searchCondition"></include>
+		AND reg_date > 0
+	</select>
+	
+	<select id="getAdminUserCount" resultType="int" > <!-- 통계용 -->
+		SELECT 
+			COUNT(*)
+		FROM 
+			users
+		WHERE
+			stat='Y'
+	</select>
+	
+		
+	<insert id="adminUserInsert" parameterType="user" >
+		INSERT INTO users 
+		(id, pwd, name, address, phone, stat, platform, role)
+		values(
+		#{ id }, 
+		#{ pwd }, 
+		#{ name }, 
+		#{ address }, 
+		#{ phone }, 
+		#{ stat },
+		#{ platform },
+		#{role} )
+	</insert>
+	
+	<!-- 유저 삭제후 리스트업(진짜 삭제) -->
+	<delete id="adminUserDeleteListUp"> 
+		DELETE FROM 
+			users 
+		WHERE 
+			id= #{id }
+	</delete>
+	
+	<!-- 유저 상세에서 삭제 (진짜 삭제) ajax -->
+	<delete id="adminUserDeleteDetail"> 
+		DELETE FROM 
+			users 
+		WHERE 
+			id= #{id } and pwd= #{pwd}
+	</delete>
+	
+	<!-- 비활성화 유저 활성화 시키기 -->
+	<update id="adminUserYes" > 
+		UPDATE 
+			users
+		SET
+			stat = 'Y' 
+		WHERE 
+			id= #{ id }
+	</update>
+	
+	<!-- 비활성화 유저 활성화 시키기 -->
+	<update id="adminUserNo" > 
+		UPDATE 
+			users
+		SET
+			stat = 'N' 
+		WHERE 
+			id= #{ id }
+	</update>
+	
+	<!-- 통계용 sql -->
+	<select id="getUserRegdate" resultType="user">
+		select reg_date from users
+	</select>
+	
+
+</mapper>

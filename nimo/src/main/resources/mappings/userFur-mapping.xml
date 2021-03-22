@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="kr.co.nimo.furniture.user.impl.UserFurnDAO">
+	<select id="getPage" parameterType="us" resultType="int">
+		<choose>
+			<when test="search==''">
+	 			select count(*) from furniture where fur_category = "의자"
+			</when>	
+			<otherwise>
+	 			select count(*) from furniture where fur_category = "의자" and fur_name like CONCAT('%',#{search},'%')
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="getFurList" parameterType="us" resultType="ufur">
+		<choose>
+			<when test="search==''">
+				select * from furniture where fur_category = "의자" limit #{pagenum}, 12
+			</when>	
+			<otherwise>
+	 			select * from furniture where fur_category = "의자" and fur_name like CONCAT('%',#{search},'%') limit #{pagenum}, 12
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="getFurList2" parameterType="us" resultType="ufur">
+		<choose>
+			<when test="search==''">
+				select * from furniture where fur_category = "의자" order by fur_price desc limit #{pagenum}, 12
+			</when>
+			<otherwise>
+	 			select * from furniture where fur_category = "의자" and fur_name like CONCAT('%',#{search},'%') order by fur_price desc limit #{pagenum}, 12
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="getFurListBed" resultType="ufur">
+		select * from furniture where fur_category = "침대"
+	</select>
+	
+	<select id="getFurDetail" resultType="ufur">
+		select * from furniture where fur_code = #{ num }
+	</select>
+
+ </mapper>
