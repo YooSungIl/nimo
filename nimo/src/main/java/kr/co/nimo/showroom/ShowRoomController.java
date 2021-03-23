@@ -9,13 +9,13 @@ import kr.co.nimo.showroom.user.UserShowRoomService;
 
 @Controller
 public class ShowRoomController {
-
+	
 	@Autowired
 	private UserShowRoomService service;
 	
 	@RequestMapping("/showRoom/livingShowRoomList.ni")
 	public String livingShowRoomList(ShowRoomVO vo, Model model) {
-		
+
 		model.addAttribute("showRoomList", service.getUserLivingShowRoomList(vo));
 		
 		return "/show/showRoomList";

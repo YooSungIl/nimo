@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="kr.co.nimo.showroom.ShowRoomVO"%>
-<c:set var="nimo" value="${pageContext.request.contextPath}" />
 <c:set var="showDetail" value="${showRoomDetail_ShowRoom}" />
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -52,20 +52,20 @@
 				</div>
 
 				<div class="row mt-5">
-					<c:forEach items="${showRoomDetail_Furs}" var="showRoomDetail_Furs">
+					<c:forEach items="${showRoomDetail_Furs}" var="showRoomDetail_Furs" varStatus="status">
 						<div class="row detailrow">
 							<div class="col-md-6">
 								<img src="${showRoomDetail_Furs.fur_image}" class="img-fluid"
-									alt="Colorlib Template">
+									alt="Colorlib Template" name="fur_img${status.index}">
 									
 							</div>
 							<div class="col-md-6">
 								<div class="tab-content bg-light" id="v-pills-tabContent">
 									<div class="tab-pane fade show active" id="v-pills-1">
 										<div class="p-4">
-											<h5 class="mb-4">${showRoomDetail_Furs.fur_name}</h5>
-											<h5 class="price">${showRoomDetail_Furs.fur_price}</h5>
-											<p>${showRoomDetail_Furs.fur_subdetail1_1}</p>
+											<h5 class="mb-4" name="fur_name${status.index}">${showRoomDetail_Furs.fur_name}</h5>
+											<h5 class="price" name="fur_price${status.index}">${showRoomDetail_Furs.fur_price}</h5>
+											<p name="fur_detail${status.index}">${showRoomDetail_Furs.fur_subdetail1_1}</p>
 											<h5 class="mb-4"></h5>
 
 											<div class="row">
@@ -73,16 +73,13 @@
 													<div class="row mt-4">
 														<div class="input-group col-md- d-flex mb-3">
 															<span class="input-group-btn mr-2">
-																<button type="button" class="quantity-left-minus btn"
-																	data-type="minus">
+																<button type="button" name="m${status.index}" class="quantity-left-minus btn" data-type="minus">
 																	<i class="fa fa-minus"></i>
 																</button>
-															</span> <input type="text" id="quantity" name="quantity"
-																class="quantity form-control input-number" value="1"
-																min="1" max="100"> <span
-																class="input-group-btn ml-2">
-																<button type="button" class="quantity-right-plus btn"
-																	data-type="plus">
+															</span>
+															<input type="text" id="quantity" name="quantity${status.index}" class="quantity form-control input-number" value="1" min="1" max="100">
+															<span class="input-group-btn ml-2">
+																<button type="button" name="p${status.index}" class="quantity-right-plus btn" data-type="plus">
 																	<i class="fa fa-plus"></i>
 																</button>
 															</span>
@@ -112,23 +109,17 @@
 						<thead class="thead-primary">
 							<tr>
 								<th>&nbsp;</th>
-								<th>&nbsp;</th>
 								<th>Product</th>
 								<th>Price</th>
 								<th>Quantity</th>
 								<th>total</th>
-								<th>&nbsp;</th>
 							</tr>
 						</thead>
-						<c:forEach items="${showRoomDetail_Furs}" var="showRoomDetail_Furs">
+						<c:forEach items="${showRoomDetail_Furs}" var="showRoomDetail_Furs" varStatus="status">
 							<tbody>
-								<tr class="alert" role="alert">
-									<td><label class="checkbox-wrap checkbox-primary">
-											<input type="checkbox" checked> <span
-											class="checkmark"></span>
-									</label></td>
+								<tr class="alert" role="alert" id="jang${status.index}">
 									<td>
-										<div class="img" style="background-image: url(images/prod-1.jpg);"></div>
+										<div class="img" style="background-image: url(${showRoomDetail_Furs.fur_image});"></div>
 									</td>
 									<td>
 										<div class="email">
@@ -136,21 +127,13 @@
 											<span>${showRoomDetail_Furs.fur_subdetail1_1}</span>
 										</div>
 									</td>
-									<td class="pr">${showRoomDetail_Furs.fur_price}</td>
+									<td id="price${status.index}">${showRoomDetail_Furs.fur_price}</td>
 									<td class="quantity">
 										<div class="input-group">
-											<input type="text" id="quantity2" name="quantity"
-												class="quantity form-control input-number" value="1" min="1"
-												max="100">
+											<input type="text" name="quantityB${status.index}" class="quantityB form-control input-number" value="1">
 										</div>
 									</td>
-									<td class="chong"></td>
-									<td>
-										<button type="button" class="close" data-dismiss="alert"
-											aria-label="Close">
-											<span aria-hidden="true"><i class="fa fa-close"></i></span>
-										</button>
-									</td>
+									<td id="chong${status.index}">${showRoomDetail_Furs.fur_price}</td>
 								</tr>
 						</c:forEach>
 						</tbody>
@@ -161,14 +144,18 @@
 				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
 					<div class="cart-total mb-3">
 						<h3 class="tototal">Cart Totals</h3>
+						<c:forEach items="${showRoomDetail_Furs}" var="showRoomDetail_Furs" varStatus="status">
+							<p class="d-flex total-price">
+								<span id="furName${status.index}">${showRoomDetail_Furs.fur_name}</span> <span id="furPrice${status.index}">${showRoomDetail_Furs.fur_price}</span>
+							</p>
+						</c:forEach>
 						<hr>
 						<p class="d-flex total-price">
-							<span>Total</span> <span>$17.60</span>
+							<span>Total</span> <span id="furPriceTotal"></span>
 						</p>
 					</div>
 					<p class="text-center">
-						<a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed
-							to Checkout</a>
+						<a href="checkout.html" class="btn btn-primary py-3 px-4">구매 하기</a>
 					</p>
 				</div>
 			</div>
@@ -178,43 +165,109 @@
 	<%@ include file="../footer.jsp"%>
 
 	<script>
+	window.onload = function() {
+		console.log("asd");
+		var total = 0;
+		<c:forEach items="${showRoomDetail_Furs}" var="showRoomDetail_Furs" varStatus="status">
+			total += ${showRoomDetail_Furs.fur_price}
+		</c:forEach>
+		console.log(total);
+		
+		document.getElementById('furPriceTotal').innerText = total;
+	};
+	
 	$(document).ready(function() {
 
-		var quantitiy = 1;
-		
+		var quantity = 1;
+			
 		$('.quantity-right-plus').click(function(e) {
-
+			
 			e.preventDefault();
 
-			var quantity = parseInt($('#quantity').val());
-
-			if (quantity < 100) {
-				$('#quantity').val(quantity + 1);
-				$('#quantity2').val(quantity + 1);
+			var button = $(this).attr('name');
+			
+			var downQuantity = button.substr(1,2);
+					
+			quantity = parseInt($("input[name='quantity"+downQuantity+"']").val());
+			
+			if (quantity != 0) {
+				
+				if (quantity < 100) {
+					$("input[name='quantity"+downQuantity+"']").val(quantity + 1);
+					$("input[name='quantityB"+downQuantity+"']").val(quantity + 1);
+				}
+					
+				quantity = parseInt($("input[name='quantity"+downQuantity+"']").val());
+				var wonlaePrice =  document.getElementById('price'+downQuantity).innerText;
+				document.getElementById('chong'+downQuantity).innerText = wonlaePrice * quantity;
+				document.getElementById('furPrice'+downQuantity).innerText = wonlaePrice * quantity;
+				
+			} else {
+				
+				document.getElementById( 'jang'+downQuantity ).setAttribute( 'style', 'display: on;' );
+				document.getElementById( 'furPrice'+downQuantity ).setAttribute( 'style', 'display: on;' );
+				$("input[name='quantity"+downQuantity+"']").val(quantity + 1);
+				$("input[name='quantityB"+downQuantity+"']").val(quantity + 1);
+				quantity = parseInt($("input[name='quantity"+downQuantity+"']").val());
+				var wonlaePrice =  document.getElementById('price'+downQuantity).innerText;
+				document.getElementById('chong'+downQuantity).innerText = wonlaePrice * quantity;
+				document.getElementById('furPrice'+downQuantity).innerText = wonlaePrice * quantity;
 			}
-			document.getElementById('chong').innerText=quantity + 1
-		});
-
-		$('.quantity-left-minus').click(function(e) {
-
-			e.preventDefault();
-
-			var quantity = parseInt($('#quantity').val());
-
-			if (quantity > 1) {
-				$('#quantity').val(quantity - 1);
-				$('#quantity2').val(quantity - 1);
-			}
-			document.getElementById('chong').innerText=quantity + 1
+			
+			
+			
+	
 		});
 		
-		$('.quantity').keydown(function(e) {
+		
+		$('.quantity-left-minus').click(function(e) {
 			
-			var quantity = parseInt($('#quantity2').val());
-			var price = $('#pr').val();
-			$('#quantity').val(quantity);
-			document.getElementById('chong').val() = price * quantity ;
+			e.preventDefault();
 			
+			var button = $(this).attr('name');
+			
+			var downQuantity = button.substr(1,2);
+			
+			quantity = parseInt($("input[name='quantity"+downQuantity+"']").val());
+			
+			if (quantity >= 0) {
+				$("input[name='quantity"+downQuantity+"']").val(quantity - 1);
+				$("input[name='quantityB"+downQuantity+"']").val(quantity - 1);
+			}
+			
+			quantity = parseInt($("input[name='quantity"+downQuantity+"']").val());
+			
+			if (quantity != 0) {
+				var chongPrice = document.getElementById('chong'+downQuantity).innerText;
+				var wonlaePrice =  document.getElementById('price'+downQuantity).innerText;
+				document.getElementById('chong'+downQuantity).innerText = chongPrice - wonlaePrice;
+				document.getElementById('furPrice'+downQuantity).innerText = chongPrice - wonlaePrice;
+			} else {
+				document.getElementById( 'jang'+downQuantity ).setAttribute( 'style', 'display: none;' );
+				document.getElementById( 'furName'+downQuantity ).setAttribute( 'style', 'display: none;' );
+				document.getElementById( 'furPrice'+downQuantity ).setAttribute( 'style', 'display: none;' );
+				
+			}
+			
+		});
+		
+		$('.quantityB').keydown(function(e) {
+
+			var quantityB = $(this).attr('name');
+			var su = quantityB.substr(9,2);
+			var tityB = $(this).val();
+			var wonlaePrice =  document.getElementById('price'+su).innerText;
+			
+			if (quantity != 0) {
+				$("input[name='quantity"+su+"']").val(tityB);
+				document.getElementById('chong'+su).innerText = wonlaePrice * tityB;
+				document.getElementById('furPrice'+su).innerText = wonlaePrice * tityB;
+				document.getElementById('chong'+su).innerText = wonlaePrice * tityB;
+			} else {
+				document.getElementById( 'jang'+downQuantity ).setAttribute( 'style', 'display: none;' );
+				document.getElementById( 'furName'+downQuantity ).setAttribute( 'style', 'display: none;' );
+				document.getElementById( 'furPrice'+downQuantity ).setAttribute( 'style', 'display: none;' );
+			}
 		});
 		
 	});

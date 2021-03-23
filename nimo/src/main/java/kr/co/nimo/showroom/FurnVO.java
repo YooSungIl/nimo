@@ -24,7 +24,7 @@ public class FurnVO {
 	public String getShow_furs_code() {
 		return show_furs_code;
 	}
-
+	
 	public void setShow_furs_code(String show_furs_code) {
 		this.show_furs_code = show_furs_code;
 	}

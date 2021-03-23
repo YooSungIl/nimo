@@ -59,7 +59,6 @@
 					<div class="row detailrow">
 						<div class="col-md-6">
 								<input type='file' id="furn_img_input" style="display: none;">
-								<input type='hidden' name="furn_img_hidden">
 								<img id="image_furn" class="img-fluid" src="/nimo/resources/images/du/plus.jpg" style="width:100;height:100%;" />
 						</div>
 						<div class="col-md-6">
@@ -143,9 +142,7 @@
 							xhr.setRequestHeader(header, token);
 						},
 						success : function(data) {
-							console.log("ajax"+su);
 							if (su != 0) {
-								console.log("input[type=text][name=furn-name" + su + "]");
 								$("input[type=text][name=furn-name" + su + "]").val(data.data.fur_name);
 								$("input[type=text][name=furn-price" + su + "]").val(data.data.fur_price);
 								$("textarea[name=furn-detail" + su + "]").val(data.data.fur_subdetail1_1);
@@ -159,7 +156,7 @@
 				}
 				reader.readAsDataURL(input.files[0]);
 			} else {
-				console.log("nonono~");
+				console.log("nonono");
 			}
 		}
 		
